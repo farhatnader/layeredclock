@@ -11,6 +11,9 @@ function generateClock() {
 		{"unit": "second", "value": sec, "capacity": 60, "radius": 200}
 	];
 
+	var arc = d3.svg.arc()
+		.startAngle(0);
+
 	var svg = d3.select("#wrapper").html('')
 		.append("svg")
 			.attr('width', 1000)
@@ -21,19 +24,16 @@ function generateClock() {
 		.data(time)
 		.enter()
 		.append("g")
-			.attr('transform', function(d, i) {
-				return 'translate(' + i*250 + ',250)';
-			});
-
-	var arc = d3.svg.arc()
-		.startAngle(0)
-		.innerRadius(200 - 30)
-		.outerRadius(200);
+			.attr('transform', 'translate(250, 250)');
 	
 	clock.append("path")
 		.style('fill', 'black')
-		.attr('d', arc.endAngle(function(d) { return getProgress(d); }));
+		.attr('d', arc.innerRadius(function(d) { return d.radius - 30; })
+					  .outerRadius(function(d) { return d.radius; })
+					  .endAngle(function(d) { return getProgress(d); })
+		);
 }
+
 
 function getProgress(obj) {
 	var progress = ((2*Math.PI) / obj.capacity) * obj.value;
