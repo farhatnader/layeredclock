@@ -25,13 +25,23 @@ function generateClock() {
 		.enter()
 		.append("g")
 			.attr('transform', 'translate(250, 250)');
+
+	clock.append("path")
+		.attr('class', "background")
+		.style('fill', 'grey')
+		.attr('d', arc.innerRadius(function(d) { return d.radius - 30; })
+					  .outerRadius(function(d) { return d.radius; })
+					  .endAngle(function(d) { return 2 * Math.PI; })
+		);
 	
 	clock.append("path")
+		.attr('class', "foreground")
 		.style('fill', 'black')
 		.attr('d', arc.innerRadius(function(d) { return d.radius - 30; })
 					  .outerRadius(function(d) { return d.radius; })
 					  .endAngle(function(d) { return getProgress(d); })
 		);
+
 }
 
 
