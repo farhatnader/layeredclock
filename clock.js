@@ -16,19 +16,18 @@ function generateClock() {
 
 	var svg = d3.select("#wrapper").html('')
 		.append("svg")
-			.attr('width', 1000)
-			.attr('height', 500)
+			.attr('width', 410)
+			.attr('height', 410)
 		.append("g");
 
 	var clock = svg.selectAll("hand")
 		.data(time)
 		.enter()
 		.append("g")
-			.attr('transform', 'translate(250, 250)');
+			.attr('transform', 'translate(205, 205)');
 
 	clock.append("path")
 		.attr('class', "background")
-		.style('fill', 'grey')
 		.attr('d', arc.innerRadius(function(d) { return d.radius - 30; })
 					  .outerRadius(function(d) { return d.radius; })
 					  .endAngle(function(d) { return 2 * Math.PI; })
@@ -41,7 +40,6 @@ function generateClock() {
 					  .outerRadius(function(d) { return d.radius; })
 					  .endAngle(function(d) { return getProgress(d); })
 		);
-
 }
 
 
