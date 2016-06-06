@@ -8,6 +8,7 @@ function setupClock() {
 		min = current_time.getMinutes(),
 		sec = current_time.getSeconds();
 
+<<<<<<< HEAD
 	var time_objects = [
 		{"unit": "hrs", "value": hr, "capacity": 24, "radius": 130}, 
 		{"unit": "mins", "value": min, "capacity": 60, "radius": 165}, 
