@@ -6,9 +6,9 @@ function generateClock() {
 		sec = current_time.getSeconds();
 
 	var time = [
-		{"unit": "hour", "value": hr, "capacity": 24, "radius": 130}, 
-		{"unit": "minute", "value": min, "capacity": 60, "radius": 165}, 
-		{"unit": "second", "value": sec, "capacity": 60, "radius": 200}
+		{"unit": "hrs", "value": hr, "capacity": 24, "radius": 130}, 
+		{"unit": "mins", "value": min, "capacity": 60, "radius": 165}, 
+		{"unit": "secs", "value": sec, "capacity": 60, "radius": 200}
 	];
 
 	var arc = d3.svg.arc()
@@ -40,6 +40,18 @@ function generateClock() {
 					  .outerRadius(function(d) { return d.radius; })
 					  .endAngle(function(d) { return getProgress(d); })
 		);
+
+	var digital = svg.selectAll("digit")
+		.data(time)
+		.enter()
+		.append("g")
+			.attr('height', 66)
+			.attr('transform', 'translate(205, 172)');
+
+	digital.append("text")
+		.text(function(d) { return d.value + ' ' + d.unit; })
+		.attr('transform', function(d, i) { return 'translate(0,' + i * 33 + ')'; })
+		.attr('text-anchor', 'middle');
 }
 
 
