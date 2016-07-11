@@ -5,10 +5,25 @@
 	<script src="d3.min.js"></script>
 	<script src="clock.js"></script>
 	<link rel="stylesheet" type="text/css" href="style.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="timezones.js"></script>
+	<script src="time_config.js"></script>
 </head>
 <body>
 
 <center>
+	<div id="timezone">
+		<form action="">
+			<select name="groups" id="groups" onchange="if (this.selectedIndex) getZones();">
+				<option value="default">Select a Geo Group</option>
+			</select>
+			<br><br>
+			<select name="zones" id="zones">
+				<option value="default">Select a Location</option>
+			</select>
+			<br><br>
+			<input type="submit">
+		</form>
 	<div id="wrapper"></div>
 </center>
 
@@ -20,6 +35,7 @@ var time = clock_configs[1];
 
 document.addEventListener("DOMContentLoaded", function(event) {
 	generateClock(arc, time);
+	getGroups();
 })
 
 window.setInterval(updateTime, 1000);
