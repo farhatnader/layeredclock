@@ -8,9 +8,9 @@ function getGroups() {
 	});
 }
 
-function getZones() {
+function getZones(elem) {
 	// var region = $("#groups").value;
-	var region = document.getElementById("groups").value;
+	var region = elem.value;
 
 	$("#zones").html('');
 	// $("<option/>", { 
