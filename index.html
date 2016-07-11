@@ -14,11 +14,15 @@
 
 <script>
 
+var clock_configs = setupClock()
+var arc = clock_configs[0]
+var time = clock_configs[1];
+
 document.addEventListener("DOMContentLoaded", function(event) {
-        generateClock();
+	generateClock(arc, time);
 })
 
-window.setInterval(generateClock, 1000);
+window.setInterval(updateTime, 1000);
 
 </script>
 
