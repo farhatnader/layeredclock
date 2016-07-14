@@ -8,6 +8,7 @@ function getGroups() {
 	});
 }
 
+
 function getZones(elem) {
 	var region = elem.value;
 
@@ -29,6 +30,7 @@ function getZones(elem) {
 		}
 	})
 }
+
 
 function changeTimezone() {
 	timezone = $("#zones").find(":selected").val();

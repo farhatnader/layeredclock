@@ -1,8 +1,3 @@
-function getProgress(obj) {
-	var progress = ((2*Math.PI) / obj.capacity) * obj.value;
-	return progress;
-}
-
 function setupClock() {
 	var arc_init = d3.svg.arc()
 		.startAngle(0);
@@ -71,37 +66,4 @@ function generateClock(arc, data) {
 		.style('fill', function(d) { return color(d.unit); })
 		.attr('transform', function(d, i) { return 'translate(0,' + i * 33 + ')'; })
 		.attr('text-anchor', 'middle');
-}
-
-function refreshTime() {
-	var new_time = new Date();
-
-	return [
-		new_time.getHours(),
-		new_time.getMinutes(),
-		new_time.getSeconds()
-	]
-}
-
-
-function modifyData(new_data) {
-	time.forEach(function(d, i) {
-		d.value = new_data[i];
-
-		d3.select("." + d.unit)
-			.attr('d', arc.endAngle(getProgress(d)));
-
-		d3.select("text." + d.unit)
-			.text(function(d) { return d.value + ' ' + d.unit; });
-	});
-}
-
-
-function updateTime() {
-	if (timezone == 'local') updated_time = refreshTime();
-	else {
-		var time_data = getTime(timezone);
-		updated_time = calculateTime(time_data);
-	}
-	modifyData(updated_time);
 }
