@@ -8,12 +8,13 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<script src="timezones.js"></script>
 	<script src="time_config.js"></script>
+	<script src="time_api.js"></script>
 </head>
 <body>
 
 <center>
 	<div id="timezone">
-		<form action="">
+		<form action="javascript:changeTimezone()">
 			<select name="groups" id="groups" onchange="if (this.selectedIndex) getZones(this);">
 				<option value="default">Select a Geo Group</option>
 			</select>
@@ -29,8 +30,9 @@
 
 <script>
 
-var clock_configs = setupClock()
-var arc = clock_configs[0]
+var timezone = 'local';
+var clock_configs = setupClock();
+var arc = clock_configs[0];
 var time = clock_configs[1];
 
 document.addEventListener("DOMContentLoaded", function(event) {

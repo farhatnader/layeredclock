@@ -73,23 +73,35 @@ function generateClock(arc, data) {
 		.attr('text-anchor', 'middle');
 }
 
+function refreshTime() {
+	var new_time = new Date();
 
-function updateTime() {
-	var current_time = new Date();
+	return [
+		new_time.getHours(),
+		new_time.getMinutes(),
+		new_time.getSeconds()
+	]
+}
 
-	var hr = current_time.getHours(),
-		min = current_time.getMinutes(),
-		sec = current_time.getSeconds();
-	
-	time[0].value = hr;
-	time[1].value = min;
-	time[2].value = sec;
 
-	time.forEach(function(d) {
+function modifyData(new_data) {
+	time.forEach(function(d, i) {
+		d.value = new_data[i];
+
 		d3.select("." + d.unit)
 			.attr('d', arc.endAngle(getProgress(d)));
 
 		d3.select("text." + d.unit)
 			.text(function(d) { return d.value + ' ' + d.unit; });
 	});
+}
+
+
+function updateTime() {
+	if (timezone == 'local') updated_time = refreshTime();
+	else {
+		var time_data = getTime(timezone);
+		updated_time = calculateTime(time_data);
+	}
+	modifyData(updated_time);
 }
