@@ -1,6 +1,7 @@
 # layeredtime
 A real time clock made with D3.
-To see it in action, visit: https://farhatnader.github.io/layeredtime
+
+To see it in action, visit: http://farhatnader.github.io/layeredtime
 
 "D3.js is a JavaScript library for manipulating documents based on data."
 
