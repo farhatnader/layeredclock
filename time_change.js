@@ -28,11 +28,14 @@ function calculateTime(data) {
 function refreshTime() {
     var new_time = new Date();
 
-    return [
-        new_time.getHours(),
-        new_time.getMinutes(),
-        new_time.getSeconds()
-    ]
+    var hr = new_time.getHours(),
+        min = new_time.getMinutes(),
+        sec = new_time.getSeconds();
+
+    if (hr > 12) hr = hr - 12;
+    hr = hr + (min / 0.6) / 100;
+
+    return [hr, min, sec]
 }
 
 
@@ -47,10 +50,14 @@ function modifyData(new_data) {
         d.value = new_data[i];
 
         d3.select("." + d.unit)
-            .attr('d', arc.endAngle(getProgress(d)));
+            .attr('d', arc.innerRadius(50)
+                          .outerRadius(180 + (i * 10))
+                          .endAngle(getProgress(d) + (0.05 / (i + 1)) / 2)
+                          .startAngle(getProgress(d) - (0.05 / (i + 1)) / 2)
+        );
 
         d3.select("text." + d.unit)
-            .text(function(d) { return d.value + ' ' + d.unit; });
+            .text(String(d.value).split('.')[0]);
     });
 }
 

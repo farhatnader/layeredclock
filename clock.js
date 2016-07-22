@@ -1,6 +1,6 @@
 function setupClock() {
-	var arc_init = d3.svg.arc()
-		.startAngle(0);
+	var arc_init = d3.svg.arc();
+		// .startAngle(0);
 
 	var current_time = new Date();
 
@@ -8,8 +8,11 @@ function setupClock() {
 		min = current_time.getMinutes(),
 		sec = current_time.getSeconds();
 
+	if (hr > 12) hr = hr - 12;
+	hr = hr + (min / 0.6) / 100;
+
 	var time_objects = [
-		{"unit": "hrs", "value": hr, "capacity": 24, "radius": 130}, 
+		{"unit": "hrs", "value": hr, "capacity": 12, "radius": 130}, 
 		{"unit": "mins", "value": min, "capacity": 60, "radius": 165}, 
 		{"unit": "secs", "value": sec, "capacity": 60, "radius": 200}
 	];
@@ -18,7 +21,7 @@ function setupClock() {
 }
 
 function generateClock(arc, data) {
-	var w = 410,
+	var w = 610,
 		h = 610;
 
 	var color = d3.scale.ordinal()
@@ -37,21 +40,19 @@ function generateClock(arc, data) {
 		.append("g")
 			.attr('transform', 'translate(' + w / 2 + ',' + h / 2 + ')');
 
-	clock.append("path")
-		.attr('class', "background")
-		.style('stroke', function(d, i) { return color(d.unit); })
-		.attr('d', arc.innerRadius(function(d) { return d.radius - 30; })
-					  .outerRadius(function(d) { return d.radius; })
-					  .endAngle(function(d) { return 2 * Math.PI; })
-		);
+	for (t = 0; t < 12; t++) {
+		clock.append("path")
+			.attr('class', 'number')
+			.style('fill', 'black')
+			.attr('d', arc.innerRadius(210)
+						  .outerRadius(220)
+						  .startAngle((2 * Math.PI) / 12 * t - 0.01)
+						  .endAngle((2 * Math.PI) / 12 * t + 0.01 ));
+	}
 	
-	clock.append("path")
+	clock.append("path") 
 		.attr('class', function(d) { return d.unit; })
-		.style('fill', function(d, i) { return color(d.unit); })
-		.attr('d', arc.innerRadius(function(d) { return d.radius - 30; })
-					  .outerRadius(function(d) { return d.radius; })
-					  .endAngle(function(d) { return getProgress(d); })
-		);
+		.style('fill', function(d, i) { return color(d.unit); });
 
 	var digital = svg.selectAll("digit")
 		.data(data)
@@ -62,8 +63,7 @@ function generateClock(arc, data) {
 
 	digital.append("text")
 		.attr('class', function(d) { return d.unit; })
-		.text(function(d) { return d.value + ' ' + d.unit; })
 		.style('fill', function(d) { return color(d.unit); })
-		.attr('transform', function(d, i) { return 'translate(0,' + i * 33 + ')'; })
+		.attr('transform', function(d, i) { return 'translate(' + (i - 1) * 30 + ', 33)'; })
 		.attr('text-anchor', 'middle');
 }
