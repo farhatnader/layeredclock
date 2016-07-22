@@ -21,8 +21,8 @@ function setupClock() {
 }
 
 function generateClock(arc, data) {
-	var w = 610,
-		h = 610;
+	var w = 550,
+		h = 550;
 
 	var color = d3.scale.ordinal()
 		.domain(data)
@@ -34,10 +34,7 @@ function generateClock(arc, data) {
 			.attr('height', h)
 		.append("g");
 
-	var clock = svg.selectAll("hand")
-		.data(data)
-		.enter()
-		.append("g")
+	var clock = svg.append("g")
 			.attr('transform', 'translate(' + w / 2 + ',' + h / 2 + ')');
 
 	for (t = 0; t < 12; t++) {
@@ -50,18 +47,24 @@ function generateClock(arc, data) {
 						  .endAngle((2 * Math.PI) / 12 * t + 0.01 ));
 	}
 	
-	clock.append("path") 
+	var hands = svg.selectAll("hand")
+		.data(data)
+		.enter()
+		.append("g")
+			.attr('transform', 'translate(' + w / 2 + ',' + h / 2 + ')');
+
+	hands.append("path") 
 		.attr('class', function(d) { return d.unit; })
 		.style('fill', function(d, i) { return color(d.unit); });
 
-	var digital = svg.selectAll("digit")
+	var digits = svg.selectAll("digit")
 		.data(data)
 		.enter()
 		.append("g")
 			.attr('height', 66)
 			.attr('transform', 'translate(' + w / 2 + ',' + (h / 2 - 33) + ')');
 
-	digital.append("text")
+	digits.append("text")
 		.attr('class', function(d) { return d.unit; })
 		.style('fill', function(d) { return color(d.unit); })
 		.attr('transform', function(d, i) { return 'translate(' + (i - 1) * 30 + ', 33)'; })

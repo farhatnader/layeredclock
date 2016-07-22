@@ -17,11 +17,14 @@ function calculateTime(data) {
     var diff = (offset - local_offset) * 3600000;
     var datetime = new Date(local.getTime() + diff)
     
-    return [
-        datetime.getHours(),
-        datetime.getMinutes(),
-        datetime.getSeconds()
-    ];
+    var hr = datetime.getHours(),
+        min = datetime.getMinutes(),
+        sec = datetime.getSeconds();
+
+    if (hr > 12) hr = hr - 12;
+    hr = hr + (min / 0.6) / 100;
+
+    return [hr, min, sec]
 }
 
 
