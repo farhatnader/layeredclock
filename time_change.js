@@ -1,7 +1,7 @@
 function getTime(zone) {
 	var xhr = new XMLHttpRequest();
     xhr.open("GET", "http://api.timezonedb.com/?zone=" + zone 
-    	+ "&format=json&key=4D7EIVIR41DJ", false);
+    	+ "&format=json&key=" + api_key, false);
     xhr.send();
 
     var response = JSON.parse(xhr.response);
