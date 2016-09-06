@@ -2,12 +2,14 @@
 <html>
 <head>
 	<title>Layered Time</title>
+	
 	<script src="d3.min.js"></script>
-	<script src="settings.js"></script>
-	<script src="clock.js"></script>
-	<link rel="stylesheet" type="text/css" href="style.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<script src="settings.js"></script>
 	<script src="timezones.js"></script>
+	<script src="clock.js"></script>
 	<script src="time_config.js"></script>
 	<script src="time_change.js"></script>
 </head>
@@ -31,17 +33,12 @@
 
 <script>
 
-var timezone = 'local';
-var clock_configs = setupClock();
-var arc = clock_configs[0];
-var time = clock_configs[1];
-
 document.addEventListener("DOMContentLoaded", function(event) {
-	generateClock(arc, time);
+	setupClock();
+	generateClock();
 	getGroups();
+	setInterval(updateTime, 1000);
 })
-
-window.setInterval(updateTime, 1000);
 
 </script>
 

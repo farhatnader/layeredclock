@@ -1,3 +1,15 @@
+function getTimestamp(zone) {
+	var xhr = new XMLHttpRequest();
+    xhr.open("GET", "http://api.timezonedb.com/?zone=" + zone 
+    	+ "&format=json&key=" + api_key, false);
+    xhr.send();
+
+    var response = JSON.parse(xhr.response);
+    
+    return response;
+}
+
+
 function getGroups() {
 	timezones.forEach(function(d) {
 		$("<option/>", {
@@ -13,10 +25,6 @@ function getZones(elem) {
 	var region = elem.value;
 
 	$("#zones").html('');
-	// $("<option/>", { 
-	// 	'value': 'default',
-	// 	'text': 'Select a Location'
-	// }).appendTo("#zones");
 
 	timezones.forEach(function(d) {
 		if (d.group == region) {
@@ -33,5 +41,6 @@ function getZones(elem) {
 
 
 function changeTimezone() {
-	timezone = $("#zones").find(":selected").val();
+	var timezone = $("#zones").find(":selected").val();
+	timestamp = getTimestamp(timezone);
 }

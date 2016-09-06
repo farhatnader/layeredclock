@@ -1,39 +1,18 @@
-function getTime(zone) {
-	var xhr = new XMLHttpRequest();
-    xhr.open("GET", "http://api.timezonedb.com/?zone=" + zone 
-    	+ "&format=json&key=" + api_key, false);
-    xhr.send();
-
-    var response = JSON.parse(xhr.response);
-    
-    return response;
-}
-
-
 function calculateTime(data) {
     var offset = parseInt(data.gmtOffset) / 3600;
     var local = new Date();
     var local_offset = local.getTimezoneOffset() * -1 / 60
     var diff = (offset - local_offset) * 3600000;
     var datetime = new Date(local.getTime() + diff)
-    
-    var hr = datetime.getHours(),
-        min = datetime.getMinutes(),
-        sec = datetime.getSeconds();
 
-    if (hr > 12) hr = hr - 12;
-    hr = hr + (min / 0.6) / 100;
-
-    return [hr, min, sec]
+    return datetime;
 }
 
 
-function refreshTime() {
-    var new_time = new Date();
-
-    var hr = new_time.getHours(),
-        min = new_time.getMinutes(),
-        sec = new_time.getSeconds();
+function refreshTime(time_data) {
+    var hr = time_data.getHours(),
+        min = time_data.getMinutes(),
+        sec = time_data.getSeconds();
 
     if (hr > 12) hr = hr - 12;
     hr = hr + (min / 0.6) / 100;
@@ -66,10 +45,12 @@ function modifyData(new_data) {
 
 
 function updateTime() {
-    if (timezone == 'local') updated_time = refreshTime();
-    else {
-        var time_data = getTime(timezone);
-        updated_time = calculateTime(time_data);
+    if (timestamp == 'local') {
+        var new_time = new Date();
     }
+    else {
+        var new_time = calculateTime(timestamp);
+    }
+    var updated_time = refreshTime(new_time);
     modifyData(updated_time);
 }

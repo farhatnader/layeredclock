@@ -1,31 +1,21 @@
 function setupClock() {
-	var arc_init = d3.svg.arc();
-		// .startAngle(0);
-
-	var current_time = new Date();
-
-	var hr = current_time.getHours(),
-		min = current_time.getMinutes(),
-		sec = current_time.getSeconds();
-
-	if (hr > 12) hr = hr - 12;
-	hr = hr + (min / 0.6) / 100;
-
-	var time_objects = [
-		{"unit": "hrs", "value": hr, "capacity": 12, "radius": 130}, 
-		{"unit": "mins", "value": min, "capacity": 60, "radius": 165}, 
-		{"unit": "secs", "value": sec, "capacity": 60, "radius": 200}
+	timestamp = 'local';
+	time = [
+		{"unit": "hrs", "value": 0, "capacity": 12, "radius": 130}, 
+		{"unit": "mins", "value": 0, "capacity": 60, "radius": 165}, 
+		{"unit": "secs", "value": 0, "capacity": 60, "radius": 200}
 	];
-
-	return [arc_init, time_objects];
 }
 
-function generateClock(arc, data) {
+
+function generateClock() {
+	arc = d3.svg.arc();
+
 	var w = 550,
 		h = 550;
 
 	var color = d3.scale.ordinal()
-		.domain(data)
+		.domain(time)
 		.range(['#476b6b', '#006666', '#0f3e3e']);
 
 	var svg = d3.select("#wrapper").html('')
@@ -48,7 +38,7 @@ function generateClock(arc, data) {
 	}
 	
 	var hands = svg.selectAll("hand")
-		.data(data)
+		.data(time)
 		.enter()
 		.append("g")
 			.attr('transform', 'translate(' + w / 2 + ',' + h / 2 + ')');
@@ -58,7 +48,7 @@ function generateClock(arc, data) {
 		.style('fill', function(d, i) { return color(d.unit); });
 
 	var digits = svg.selectAll("digit")
-		.data(data)
+		.data(time)
 		.enter()
 		.append("g")
 			.attr('height', 66)
