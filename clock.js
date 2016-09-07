@@ -5,6 +5,10 @@ function setupClock() {
 		{"unit": "mins", "value": 0, "capacity": 60, "radius": 165}, 
 		{"unit": "secs", "value": 0, "capacity": 60, "radius": 200}
 	];
+
+	$.getJSON("http://freegeoip.net/json/", function(data) { 
+		$("#location").text(data.city);
+	});
 }
 
 

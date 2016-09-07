@@ -41,6 +41,8 @@ function getZones(elem) {
 
 
 function changeTimezone() {
+	var location = $("#zones").find(":selected").text().split('(')[0];
+	$("#location").text(location);
 	var timezone = $("#zones").find(":selected").val();
 	timestamp = getTimestamp(timezone);
 }
