@@ -32,14 +32,13 @@ function modifyData(new_data) {
         d.value = new_data[i];
 
         d3.select("." + d.unit)
-            .attr('d', arc.innerRadius(50)
-                          .outerRadius(180 + (i * 10))
-                          .endAngle(getProgress(d) + (0.05 / (i + 1)) / 2)
-                          .startAngle(getProgress(d) - (0.05 / (i + 1)) / 2)
-        );
+            .attr('d', arc.innerRadius(30)
+                          .outerRadius(160 + (i * 15))
+                          .endAngle(getProgress(d) + 0.07 / (i + 1) / 2)
+                          .startAngle(getProgress(d) - 0.05 / (i + 1) / 2));
 
-        d3.select("text." + d.unit)
-            .text(String(d.value).split('.')[0]);
+        // d3.select("text." + d.unit)
+        //     .text(String(d.value).split('.')[0]);
     });
 }
 
